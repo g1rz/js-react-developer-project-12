@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start-server -s ./frontend/build"
+    "start": "start-server -a localhost -p 5001 -s ./frontend/build"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,5 @@
   "dependencies": {
     "@hexlet/chat-server": "^1.1.8"
   },
-  "proxy": "http://0.0.0.0:500"
+  "proxy": "http://localhost:5000"
 }
