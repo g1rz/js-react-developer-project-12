@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import './index.css';
-import { Login, Home, Page404} from './pages';
+import '@/index.css';
+import { Login, Home, Page404} from '@/pages';
 
 const router = createBrowserRouter([
   {
