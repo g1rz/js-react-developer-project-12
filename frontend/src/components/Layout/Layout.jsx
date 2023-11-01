@@ -1,3 +1,5 @@
+import Container from '@mui/material/Container';
+
 import './Layout.scss';
 
 export const Layout = ({ children }) => {
@@ -8,7 +10,7 @@ export const Layout = ({ children }) => {
 			</header>
 
 			<main className="main-content">
-				<div className="container h-100">{children}</div>
+				<Container sx={{ height: '100%' }}>{children}</Container>
 			</main>
 
 			<footer className="footer"></footer>
