@@ -10,6 +10,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
+import api from '@/api/routes';
 
 const Login = () => {
 	const schema = yup.object().shape({
@@ -33,6 +34,14 @@ const Login = () => {
 	const onSubmitHandler = (data) => {
 		console.log({ data });
 		reset();
+		console.log(api.loginPath);
+		fetch(api.loginPath(), {
+			method: 'post',
+			body: JSON.stringify({
+				username: data.username,
+				password: data.password,
+			}),
+		}).then((json) => console.log(json));
 	};
 
 	return (
