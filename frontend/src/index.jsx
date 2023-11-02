@@ -4,6 +4,9 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import '@/index.scss';
 import { Login, Home, Page404 } from '@/pages';
+import { ThemeProvider } from '@mui/material';
+
+import theme from './theme';
 
 const router = createBrowserRouter([
 	{
@@ -17,9 +20,13 @@ const router = createBrowserRouter([
 	},
 ]);
 
+console.log(theme);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 	<React.StrictMode>
-		<RouterProvider router={router} />
+		<ThemeProvider theme={theme}>
+			<RouterProvider router={router} />
+		</ThemeProvider>
 	</React.StrictMode>
 );
