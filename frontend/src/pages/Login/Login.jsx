@@ -11,14 +11,15 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import api from '@/api/routes';
+import axios from 'axios';
 
 const Login = () => {
 	const schema = yup.object().shape({
 		username: yup.string().required('Введите ник'),
 		password: yup
 			.string()
-			.min(8, 'Не менее 8 символов')
-			.max(32, 'Не более 32 символов')
+			// .min(8, 'Не менее 8 символов')
+			// .max(32, 'Не более 32 символов')
 			.required(),
 	});
 
@@ -37,11 +38,23 @@ const Login = () => {
 		console.log(api.loginPath);
 		fetch(api.loginPath(), {
 			method: 'post',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
 			body: JSON.stringify({
 				username: data.username,
 				password: data.password,
 			}),
 		}).then((json) => console.log(json));
+
+		// axios
+		// 	.post(api.loginPath(), {
+		// 		username: data.username,
+		// 		password: data.password,
+		// 	})
+		// 	.then((response) => {
+		// 		console.log(response.data); // => { token: ..., username: 'admin' }
+		// 	});
 	};
 
 	return (
