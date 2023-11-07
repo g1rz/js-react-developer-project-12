@@ -5,22 +5,29 @@ import {
 	Typography,
 	TextField,
 	Button,
+	Alert,
 } from '@mui/material';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Link } from 'react-router-dom';
 import api from '@/api/routes';
-import axios from 'axios';
+import React from 'react';
+import AuthContext from '@/contexts/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
+	const [isInvalid, setIsInvalid] = React.useState(false);
+	const { auth, setAuth } = React.useContext(AuthContext);
+	const navigate = useNavigate();
+
 	const schema = yup.object().shape({
 		username: yup.string().required('Введите ник'),
 		password: yup
 			.string()
-			// .min(8, 'Не менее 8 символов')
-			// .max(32, 'Не более 32 символов')
-			.required(),
+			.min(5, 'Не менее 5 символов')
+			.max(32, 'Не более 32 символов')
+			.required('Введите пароль'),
 	});
 
 	const {
@@ -33,28 +40,33 @@ const Login = () => {
 	});
 
 	const onSubmitHandler = (data) => {
-		console.log({ data });
 		reset();
-		console.log(api.loginPath);
+		const sendData = {
+			username: data.username,
+			password: data.password,
+		};
 		fetch(api.loginPath(), {
 			method: 'post',
 			headers: {
 				'Content-Type': 'application/json;charset=utf-8',
 			},
-			body: JSON.stringify({
-				username: data.username,
-				password: data.password,
-			}),
-		}).then((json) => console.log(json));
-
-		// axios
-		// 	.post(api.loginPath(), {
-		// 		username: data.username,
-		// 		password: data.password,
-		// 	})
-		// 	.then((response) => {
-		// 		console.log(response.data); // => { token: ..., username: 'admin' }
-		// 	});
+			body: JSON.stringify(sendData),
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				if (json.statusCode && json.statusCode === 401) {
+					setIsInvalid(true);
+				} else {
+					setIsInvalid(false);
+					console.log(json);
+					localStorage.setItem('token', json.token);
+					setAuth({
+						isAuth: true,
+					});
+					return navigate('/');
+				}
+				console.log(auth);
+			});
 	};
 
 	return (
@@ -91,6 +103,14 @@ const Login = () => {
 							<Button type="submit" variant="contained">
 								Отправить
 							</Button>
+							{isInvalid && (
+								<Alert
+									severity="error"
+									sx={{ marginTop: '20px' }}
+								>
+									Логин или пароль неверные
+								</Alert>
+							)}
 						</form>
 					</CardContent>
 					<CardContent>
