@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [isInvalid, setIsInvalid] = React.useState(false);
-	const { auth, setAuth } = React.useContext(AuthContext);
+	const { isAuth, logIn, logOut } = React.useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const schema = yup.object().shape({
@@ -56,16 +56,14 @@ const Login = () => {
 			.then((json) => {
 				if (json.statusCode && json.statusCode === 401) {
 					setIsInvalid(true);
+					logOut();
 				} else {
 					setIsInvalid(false);
 					console.log(json);
 					localStorage.setItem('token', json.token);
-					setAuth({
-						isAuth: true,
-					});
+					logIn();
 					return navigate('/');
 				}
-				console.log(auth);
 			});
 	};
 
