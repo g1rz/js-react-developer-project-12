@@ -1,6 +1,6 @@
-import Page404 from "./Page404/Page404";
-import Home from "./Home/Home";
-import Login from "./Login/Login";
+import Page404 from "./Page404";
+import Home from "./Home";
+import Login from "./Login";
 
 export {
     Page404,

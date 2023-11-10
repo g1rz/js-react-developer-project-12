@@ -18,7 +18,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 	const [isInvalid, setIsInvalid] = React.useState(false);
-	const { isAuth, logIn, logOut } = React.useContext(AuthContext);
+	const [isSuccessAuth, setIsSuccessAuth] = React.useState(false);
+	const { logIn, logOut } = React.useContext(AuthContext);
 	const navigate = useNavigate();
 
 	const schema = yup.object().shape({
@@ -54,15 +55,19 @@ const Login = () => {
 		})
 			.then((response) => response.json())
 			.then((json) => {
+				console.log(json);
 				if (json.statusCode && json.statusCode === 401) {
 					setIsInvalid(true);
 					logOut();
 				} else {
 					setIsInvalid(false);
+					setIsSuccessAuth(true);
 					console.log(json);
 					localStorage.setItem('token', json.token);
 					logIn();
-					return navigate('/');
+					setTimeout(() => {
+						navigate('/');
+					}, 1000);
 				}
 			});
 	};
@@ -107,6 +112,14 @@ const Login = () => {
 									sx={{ marginTop: '20px' }}
 								>
 									Логин или пароль неверные
+								</Alert>
+							)}
+							{isSuccessAuth && (
+								<Alert
+									severity="success"
+									sx={{ marginTop: '20px' }}
+								>
+									Вы успешно авторизовались
 								</Alert>
 							)}
 						</form>
