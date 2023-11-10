@@ -1,9 +1,11 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import theme from '@/theme';
 import AuthProvider from '@/providers/AuthProvider';
+import store from '@/slices/index.js';
 
 import { Login, Home, Page404 } from '@/pages';
 
@@ -22,9 +24,11 @@ const App = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<AuthProvider>
-				<RouterProvider router={router} />
-			</AuthProvider>
+			<Provider store={store}>
+				<AuthProvider>
+					<RouterProvider router={router} />
+				</AuthProvider>
+			</Provider>
 		</ThemeProvider>
 	);
 };
