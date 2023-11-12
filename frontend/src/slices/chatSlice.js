@@ -12,11 +12,10 @@ const chatSlice = createSlice({
 	initialState,
 	reducers: {
 		setChannels: (state, action) => {
-			console.log('action', action);
-			state.channels = [...action.payload];
+			state.channels = action.payload;
 		},
 		setMessages: (state, action) => {
-			state.messages = [...action.payload];
+			state.messages = action.payload;
 		},
 		setCurrentChannelId: (state, action) => {
 			state.currentChannelId = action.payload;

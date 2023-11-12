@@ -1,8 +1,11 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { Card, Grid } from '@mui/material';
 
 import { Layout } from '@/components/Layout/Layout';
+import Channels from '@/components/Channels';
+
 import AuthContext from '@/contexts/AuthContext';
 
 import {
@@ -12,17 +15,10 @@ import {
 } from '@/slices/chatSlice.js';
 
 import api from '@/api/routes';
-import Channels from '../components/Channels';
 
 const Home = () => {
 	const { isAuth } = React.useContext(AuthContext);
 	const navigate = useNavigate();
-
-	const massages = useSelector((state) => state.chat.messages);
-	const currentChannelId = useSelector(
-		(state) => state.chat.currentChannelId
-	);
-
 	const dispatch = useDispatch();
 
 	React.useEffect(() => {
@@ -39,18 +35,22 @@ const Home = () => {
 		})
 			.then((response) => response.json())
 			.then((json) => {
-				console.log(json.channels);
 				dispatch(setChannels(json.channels));
 				dispatch(setMessages(json.messages));
 				dispatch(setCurrentChannelId(json.currentChannelId));
 			});
-	}, []);
+	}, [isAuth]);
 
 	return (
 		<Layout>
-			<div>Home</div>
-			<Channels />
-			{currentChannelId}
+			<Card sx={{ marginTop: '50px' }}>
+				<Grid container>
+					<Grid item xs={3}>
+						<Channels />
+					</Grid>
+					<Grid item xs={9}></Grid>
+				</Grid>
+			</Card>
 		</Layout>
 	);
 };
