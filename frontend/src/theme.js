@@ -6,6 +6,13 @@ const theme = createTheme({
 			fontSize: '3rem',
 			marginBottom: 20,
 		},
+		h2: {
+			fontSize: '2rem'
+		}, 
+		h3: {
+			fontSize: '1.5rem',
+			fontWeight: 500
+		}
 	},
 	components: {
 		Card: {
