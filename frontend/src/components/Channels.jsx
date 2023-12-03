@@ -26,7 +26,7 @@ const Channels = () => {
 	const dispatch = useDispatch();
 
 	return (
-		<Box sx={{ boxShadow: 1 }}>
+		<Box sx={{ boxShadow: 1, height: '100%' }}>
 			<Grid
 				container
 				sx={{
