@@ -56,13 +56,12 @@ const Login = () => {
 			.then((response) => response.json())
 			.then((json) => {
 				console.log(json);
-				if (json.statusCode && json.statusCode === 401) {
+				if (json.statusCode === 400) {
 					setIsInvalid(true);
 					logOut();
 				} else {
 					setIsInvalid(false);
 					setIsSuccessAuth(true);
-					console.log(json);
 					localStorage.setItem('token', json.token);
 					logIn();
 					setTimeout(() => {

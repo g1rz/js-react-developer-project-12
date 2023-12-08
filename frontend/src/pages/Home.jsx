@@ -28,18 +28,18 @@ const Home = () => {
 		}
 		const token = localStorage.getItem('token');
 
-		fetch(api.dataPath(), {
-			method: 'get',
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		})
-			.then((response) => response.json())
-			.then((json) => {
-				dispatch(setChannels(json.channels));
-				dispatch(setMessages(json.messages));
-				dispatch(setCurrentChannelId(json.currentChannelId));
-			});
+		// fetch(api.dataPath(), {
+		// 	method: 'get',
+		// 	headers: {
+		// 		Authorization: `Bearer ${token}`,
+		// 	},
+		// })
+		// 	.then((response) => response.json())
+		// 	.then((json) => {
+		// 		dispatch(setChannels(json.channels));
+		// 		dispatch(setMessages(json.messages));
+		// 		dispatch(setCurrentChannelId(json.currentChannelId));
+		// 	});
 	}, [isAuth]);
 
 	return (
@@ -50,7 +50,7 @@ const Home = () => {
 						<Channels />
 					</Grid>
 					<Grid item xs={9}>
-						<Messages />
+						{/* <Messages /> */}
 					</Grid>
 				</Grid>
 			</Card>
