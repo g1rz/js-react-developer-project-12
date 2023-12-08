@@ -7,7 +7,7 @@ import theme from '@/theme';
 import AuthProvider from '@/providers/AuthProvider';
 import store from '@/slices/index.js';
 
-import { Login, Home, Page404 } from '@/pages';
+import { Login, Home, Page404, Registration } from '@/pages';
 
 const App = () => {
 	const router = createBrowserRouter([
@@ -19,6 +19,10 @@ const App = () => {
 		{
 			path: '/login',
 			element: <Login />,
+		},
+		{
+			path: '/registration',
+			element: <Registration />,
 		},
 	]);
 

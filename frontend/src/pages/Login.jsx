@@ -125,7 +125,8 @@ const Login = () => {
 					</CardContent>
 					<CardContent>
 						<Typography>
-							Нет аккаунта? <Link to="/registr">Регистрация</Link>
+							Нет аккаунта?{' '}
+							<Link to="/registration">Регистрация</Link>
 						</Typography>
 					</CardContent>
 				</Card>
