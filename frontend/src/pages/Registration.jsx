@@ -17,6 +17,11 @@ import AuthContext from '@/contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const Registration = () => {
+	const [error, setError] = React.useState('');
+	const [isSuccess, setIsSuccess] = React.useState(false);
+	const { logIn } = React.useContext(AuthContext);
+	const navigate = useNavigate();
+
 	const schema = yup.object().shape({
 		email: yup
 			.string()
@@ -50,29 +55,27 @@ const Registration = () => {
 			password: data.password,
 		};
 		console.log(sendData);
-		// fetch(api.loginPath(), {
-		// 	method: 'post',
-		// 	headers: {
-		// 		'Content-Type': 'application/json;charset=utf-8',
-		// 	},
-		// 	body: JSON.stringify(sendData),
-		// })
-		// 	.then((response) => response.json())
-		// 	.then((json) => {
-		// 		console.log(json);
-		// 		if (json.statusCode === 400) {
-		// 			setIsInvalid(true);
-		// 			logOut();
-		// 		} else {
-		// 			setIsInvalid(false);
-		// 			setIsSuccessAuth(true);
-		// 			localStorage.setItem('token', json.token);
-		// 			logIn();
-		// 			setTimeout(() => {
-		// 				navigate('/');
-		// 			}, 1000);
-		// 		}
-		// 	});
+		fetch(api.registrationPath(), {
+			method: 'post',
+			headers: {
+				'Content-Type': 'application/json;charset=utf-8',
+			},
+			body: JSON.stringify(sendData),
+		})
+			.then((response) => response.json())
+			.then((json) => {
+				console.log(json);
+				if (json.statusCode && json.statusCode !== 200) {
+					setError(json.message);
+				} else {
+					setIsSuccess(true);
+					localStorage.setItem('token', json.token);
+					logIn();
+					setTimeout(() => {
+						navigate('/');
+					}, 1000);
+				}
+			});
 	};
 
 	return (
@@ -119,6 +122,22 @@ const Registration = () => {
 							<Button type="submit" variant="contained">
 								Зарегестрироваться
 							</Button>
+							{error && (
+								<Alert
+									severity="error"
+									sx={{ marginTop: '20px' }}
+								>
+									{error}
+								</Alert>
+							)}
+							{isSuccess && (
+								<Alert
+									severity="success"
+									sx={{ marginTop: '20px' }}
+								>
+									Вы успешно авторизовались
+								</Alert>
+							)}
 						</form>
 					</CardContent>
 					<CardContent>
