@@ -23,7 +23,10 @@ const Login = () => {
 	const navigate = useNavigate();
 
 	const schema = yup.object().shape({
-		username: yup.string().required('Введите ник'),
+		email: yup
+			.string()
+			.email('Некорректный email')
+			.required('Введите email'),
 		password: yup
 			.string()
 			.min(5, 'Не менее 5 символов')
@@ -43,7 +46,7 @@ const Login = () => {
 	const onSubmitHandler = (data) => {
 		reset();
 		const sendData = {
-			username: data.username,
+			email: data.email,
 			password: data.password,
 		};
 		fetch(api.loginPath(), {
@@ -81,14 +84,14 @@ const Login = () => {
 						</Typography>
 						<form onSubmit={handleSubmit(onSubmitHandler)}>
 							<TextField
-								{...register('username')}
-								label="Ваш ник"
+								{...register('email')}
+								label="Ваш email"
 								variant="outlined"
 								size="small"
 								fullWidth
 								margin="normal"
-								error={Boolean(errors.username)}
-								helperText={errors.username?.message}
+								error={Boolean(errors.email)}
+								helperText={errors.email?.message}
 							/>
 							<TextField
 								{...register('password')}
@@ -103,14 +106,14 @@ const Login = () => {
 							/>
 
 							<Button type="submit" variant="contained">
-								Отправить
+								Войти
 							</Button>
 							{isInvalid && (
 								<Alert
 									severity="error"
 									sx={{ marginTop: '20px' }}
 								>
-									Логин или пароль неверные
+									Email или пароль неверные
 								</Alert>
 							)}
 							{isSuccessAuth && (
